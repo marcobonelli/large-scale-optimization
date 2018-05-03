@@ -22,7 +22,7 @@ def solveRelax():
 
 	model = Model('Generalized Assignment Problem')
 
-	x = model.addVars(tasks, resources, vtype = GRB.BINARY, name = 'x')
+	x = model.addVars(tasks, resources, vtype = GRB.CONTINUOUS, name = 'x')
 
 	model.update()
 
@@ -31,7 +31,7 @@ def solveRelax():
 	model.addConstrs((quicksum(x[i, j] for j in resources) == 1 for i in tasks), name = 'r1')
 	model.addConstrs((quicksum(a[i][j] * x[i, j] for i in tasks) <= b[j] for j in resources), name = 'r2')
 
-	model = model.relax()
+#	model = model.relax() --> transformar variaveis tipo GRB.INTEGER/GRB.BINARY em GRB.CONTINUOUS 
 
 	model.optimize()
 
